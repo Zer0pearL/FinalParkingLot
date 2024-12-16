@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+   
+    body {
+      background-color: #eef2f3; 
+      font-family: 'Roboto', sans-serif;
+      color: #343a40; 
+      margin: 0;
+    }
+
+    .navbar {
+      background: linear-gradient(45deg, #007bff, #0056b3); 
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    }
+
+    .navbar-brand, .nav-link {
+      color: #ffffff !important; 
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+      color: #ffdd57 !important; 
+    }
+
+    .messages {
+      margin: 20px auto;
+      padding: 10px;
+      list-style: none;
+      max-width: 800px;
+    }
+
+    .messages li {
+      background-color: #ffeed4; 
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      border: 1px solid #f7c98a;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    main {
+      background: #ffffff; 
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .footer {
+      background-color: #343a40; 
+      color: #d1d1d1;
+      padding: 15px 0;
+    }
+
+    .footer span {
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #1d84f5, #125abc);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(45deg, #1455a1, #0f3c6f);
+    }
+
+    .container.mt-3 {
+      max-width: 960px;
+    }
+    .navbar .nav-link.welcome {
+      background-color: #ffdd57; 
+      color: #343a40 !important; 
+      font-weight: bold; 
+      padding: 10px 20px;
+      border-radius: 20px; 
+      transition: all 0.3s ease-in-out; 
+    }
+  
+    
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Parking Management</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link welcome" href="#">Welcome, {{ user.username }}! Balance: ${{ user.profile.balance }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'delete_profile' %}">Delete Profile</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  <main class="container mt-3">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer text-center">
+    <div class="container">
+      <span>&copy; Zeinab and Sami </a></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

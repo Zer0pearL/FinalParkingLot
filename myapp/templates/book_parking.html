@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Book Parking</h2>
+
+<div style="display: flex; gap: 20px;">
+
+    <!-- Form Section -->
+    <div style="flex: 1;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Book Parking</button>
+        </form>
+    </div>
+
+    <!-- Available Parking Spaces Table Section -->
+    <div style="flex: 2;">
+        <h3>Available Parking Spaces</h3>
+        <table class="table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Spot Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for space in available_spaces %}
+                    <tr {% if space.is_occupied %}style="background-color: #f2dede;"{% else %}style="background-color: #dff0d8;"{% endif %}>
+                        <td>{{ space.spot_number }}</td>
+                        <td>
+                            {% if space.is_occupied %}
+                                Occupied
+                            {% else %}
+                                Available
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">No available parking spaces.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

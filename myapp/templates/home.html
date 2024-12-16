@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Vehicles</h2>
+<div class="row">
+    {% for vehicle in vehicle_data %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicle Number: {{ vehicle.vehicle_number }}</h5>
+                    <p class="card-text">Parking Lot: {{ vehicle.parking_lot }}</p>
+                    <p class="card-text">Parking Space: {{ vehicle.parking_space }}</p>
+                    <p class="card-text">Remaining Booking Time: {{ vehicle.remaining_time }}</p>
+                    {% if vehicle.latest_booking_id %}
+                        <a href="{% url 'delete_booking' vehicle.latest_booking_id %}" class="btn btn-danger">Cancel Booking</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<a href="{% url 'select_parking_lot' %}" class="btn btn-primary">Book Parking</a>
+<a href="{% url 'add_vehicle' %}" class="btn btn-secondary">Add Vehicle</a>
+<a href="{% url 'my_parking_lots' %}" class="btn btn-info">View My Parking Lots & Revenue</a>
+
+{% endblock %}

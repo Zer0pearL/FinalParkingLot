@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Select Parking Lot</h1>
+<ul>
+  {% for parking_lot in parking_lots %}
+    <li>
+      <a href="{% url 'book_parking' parking_lot.id %}">{{ parking_lot.name }}, {{ parking_lot.address}}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

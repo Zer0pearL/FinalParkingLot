@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Parking Lots and Spaces</h2>
+<div class="row">
+    {% for lot_data in parking_lots_with_spaces %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Parking Lot: {{ lot_data.lot.name }}</h5>
+                    <p class="card-text">Address: {{ lot_data.lot.address }}</p>
+                    <p class="card-text">Revenue: ${{ lot_data.lot.revenue }}</p>
+                    
+                    <h6>Parking Spaces:</h6>
+                    <ul>
+                        {% for space in lot_data.spaces %}
+                            <li>
+                                Spot #{{ space.spot_number }} - 
+                                {% if space.is_occupied %}
+                                    <span class="text-danger">Occupied</span>
+                                {% else %}
+                                    <span class="text-success">Available</span>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
